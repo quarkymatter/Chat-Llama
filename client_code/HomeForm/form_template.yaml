@@ -25,6 +25,10 @@ components:
       name: label_4
       properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 'Feedback:', tooltip: '', underline: false, visible: true}
       type: Label
+    - layout_properties: {grid_position: 'NRSIUW,GCIBUD'}
+      name: text_area_1
+      properties: {}
+      type: TextArea
     - layout_properties: {grid_position: 'VBRMEF,GFZMQR'}
       name: feedback_box
       properties: {}
