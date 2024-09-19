@@ -18,33 +18,96 @@ from anvil.tables import app_tables
 # To find the Server Module, look under "Server Code" on the
 # left.
 #
+import tkinter as tk
+from huggingface_hub import InferenceClient
+
+# Replace with your model and token
+client = InferenceClient(
+    "meta-llama/Meta-Llama-3.1-8B-Instruct",
+    token="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",
+)
 
 
-class HomeForm(HomeFormTemplate):
-  def __init__(self, **properties):
-    # Set Form properties and Data Bindings.
-    self.init_components(**properties)
 
-    # Any code you write here will run when the form opens.
 
-  def submit_button_click(self, **event_args):
-    # This method runs when the button is clicked.
-    # First, we grab the contents of the text boxes:
-    name = self.name_box.text
-    email = self.email_box.text
-    feedback = self.feedback_box.text
 
-    # Now we call our Server Module to save our input
-    # in the database and send you an email:
-    anvil.server.call("add_feedback", name, email, feedback)
-    # (Hint: Find ServerModule1 under "Server Code" on the
-    # left. Click on the folder icon if you can't see it.)
+def GUI():
+    global chatlog, textbox, send_button
 
-    # Display something to the user so they know it worked:
-    Notification("Feedback submitted!").show()
-    self.clear_inputs()
+    # Initialize Tkinter window
+    gui = tk.Tk()
+    gui.title("PolicyPro Chat")
+    gui.geometry("900x750")
 
-  def clear_inputs(self):
-    self.name_box.text = ""
-    self.email_box.text = ""
-    self.feedback_box.text = ""
+#############----MENU-----################
+    
+    # Create a menu bar
+    menu_bar = tk.Menu(gui)
+    gui.config(menu=menu_bar)
+
+    # Create a file menu
+    file_menu = tk.Menu(menu_bar, tearoff=0)
+    menu_bar.add_cascade(label="File", menu=file_menu)
+
+
+    # Add "Open File" and "Save File" commands
+    file_menu.add_command(label="Open File", command="")
+    file_menu.add_command(label="Save File", command="")
+
+    
+    
+#############---CHAT AREA---#############
+
+    
+    # Text area to display messages
+    chatlog = tk.Text(gui, bg="#2C3E50", fg='white')
+    chatlog.config(state=tk.DISABLED)
+    chatlog.pack(fill=tk.BOTH, expand=True)
+
+    # Input frame
+    input_frame = tk.Frame(gui)
+    input_frame.pack(fill=tk.X, side=tk.BOTTOM)
+    
+    # Textbox for user input
+    textbox = tk.Text(gui, bg="#ABB2B9", fg='white', width=50, height=3)
+    textbox.pack(fill=tk.X)
+
+    
+    
+############---SEND BUTTON--################
+    
+    # Button to send messages
+    send_button = tk.Button(input_frame, text="Send")
+    send_button.pack(side=tk.RIGHT)
+    
+    
+
+
+
+############--- MAIN ----############
+
+ # Create a new frame for the buttons on the right
+    button_frame = tk.Frame(gui)
+    button_frame.pack(side=tk.TOP, fill=tk.Y)
+
+    # Add buttons to the frame
+    button1 = tk.Button(button_frame, text="Button 1", command=open_file)
+    button1.pack(pady=10)
+    button2 = tk.Button(button_frame, text="Button 2", command=save_file)
+    button2.pack(pady=10)
+
+    
+
+    gui.mainloop()
+
+
+   
+
+
+
+
+
+
+        
+if __name__ == "__main__":
+    GUI()
